@@ -19,7 +19,7 @@ const translations: Translation = {
   navSkills: { en: "// Skills", es: "// Habilidades" },
   navServices: { en: "// Services", es: "// Servicios" },
   navProjects: { en: "// Projects", es: "// Proyectos" },
-  navContact: { en: "// Contact", es: "// Contacto" },
+  navContact: { en: "// Contacto", es: "// Contacto" },
 
   // Hero Section
   heroTitle: { en: "Mauricio Medina", es: "Mauricio Medina" },
@@ -575,7 +575,18 @@ echo "Backup completed: $BACKUP_DIR"`,
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      // Get the header height for offset calculation
+      const header = document.querySelector("nav")
+      const headerHeight = header ? header.offsetHeight : 70
+
+      // Calculate the target position accounting for sticky header
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - headerHeight - 20 // Extra 20px padding
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
     }
   }
 
@@ -584,14 +595,14 @@ echo "Backup completed: $BACKUP_DIR"`,
   }
 
   return (
-    <div className="min-h-screen bg-[#111111] text-[#EAEAEA] font-mono">
+    <div className="min-h-screen bg-[#111111] text-[#EAEAEA] font-mono main-content">
       <DigitalEtherBackground />
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 nav-bar">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex justify-between items-center">
             {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-10">
+            <div className="hidden md:flex space-x-10 desktop-nav-panel">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -611,7 +622,7 @@ echo "Backup completed: $BACKUP_DIR"`,
             </div>
 
             {/* Desktop Language Switcher */}
-            <div className="hidden md:flex items-center space-x-1 text-sm">
+            <div className="hidden md:flex items-center space-x-1 text-sm desktop-nav-panel">
               <button
                 onClick={() => switchLanguage("es")}
                 className={`transition-all duration-300 ${
@@ -638,13 +649,15 @@ echo "Backup completed: $BACKUP_DIR"`,
             </div>
 
             {/* Mobile Menu */}
-            <MobileMenu
-              navItems={navItems}
-              activeSection={activeSection}
-              language={language}
-              onSectionClick={scrollToSection}
-              onLanguageSwitch={switchLanguage}
-            />
+            <div className="mobile-only">
+              <MobileMenu
+                navItems={navItems}
+                activeSection={activeSection}
+                language={language}
+                onSectionClick={scrollToSection}
+                onLanguageSwitch={switchLanguage}
+              />
+            </div>
           </div>
         </div>
       </nav>

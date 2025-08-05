@@ -20,15 +20,54 @@ export default function MobileMenu({
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    // Prevent body scroll when menu is open
+    // Enhanced scroll locking for mobile menu
     if (isOpen) {
+      // Store current scroll position
+      const scrollY = window.scrollY
+
+      // Apply scroll lock styles
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.left = "0"
+      document.body.style.right = "0"
       document.body.style.overflow = "hidden"
+      document.body.style.width = "100%"
+
+      // Store scroll position for restoration
+      document.body.setAttribute("data-scroll-lock", scrollY.toString())
     } else {
-      document.body.style.overflow = "unset"
+      // Restore scroll position and remove lock
+      const scrollY = document.body.getAttribute("data-scroll-lock")
+
+      // Remove scroll lock styles
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.left = ""
+      document.body.style.right = ""
+      document.body.style.overflow = ""
+      document.body.style.width = ""
+
+      // Restore scroll position
+      if (scrollY) {
+        window.scrollTo(0, Number.parseInt(scrollY))
+        document.body.removeAttribute("data-scroll-lock")
+      }
     }
 
     return () => {
-      document.body.style.overflow = "unset"
+      // Cleanup on unmount
+      const scrollY = document.body.getAttribute("data-scroll-lock")
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.left = ""
+      document.body.style.right = ""
+      document.body.style.overflow = ""
+      document.body.style.width = ""
+
+      if (scrollY) {
+        window.scrollTo(0, Number.parseInt(scrollY))
+        document.body.removeAttribute("data-scroll-lock")
+      }
     }
   }, [isOpen])
 
