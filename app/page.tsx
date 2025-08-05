@@ -237,7 +237,7 @@ app.get('/api/users/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });`,
-      image: "/placeholder.svg?height=300&width=400&text=Web+Development+Project",
+      image: "./public/fotoperfilmauriciomedina.jpeg",
     },
     {
       id: 1,
@@ -695,9 +695,9 @@ echo "Backup completed: $BACKUP_DIR"`,
 
             {/* Profile Picture Module */}
             <div className="flex justify-center items-start p-8 fade-slide-up stagger-2">
-              <div className="w-36 h-36 rounded-full overflow-hidden hover:ring-2 hover:ring-[#9370DB] hover:shadow-lg hover:shadow-[#9370DB]/50 transition-all duration-500">
+              <div className="w-56 h-56 rounded-full overflow-hidden hover:ring-2 hover:ring-[#9370DB] hover:shadow-lg hover:shadow-[#9370DB]/50 transition-all duration-500">
                 <img
-                  src="/placeholder.svg?height=144&width=144&text=MM"
+                  src="fotoperfilmauriciomedina.jpeg"
                   alt="Mauricio Medina"
                   className="w-full h-full object-cover"
                 />
@@ -1128,28 +1128,28 @@ echo "Backup completed: $BACKUP_DIR"`,
 
             <div className="bg-transparent p-8 transition-all duration-300 fade-slide-up stagger-2">
               <div className="text-sm text-[#9370DB] mb-6 font-mono">{t("socialLinks")}</div>
-              <div className="space-y-4">
+              <div className=" space-y-4">
                 <a
-                  href="https://linkedin.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
+                  href="https://www.linkedin.com/in/mauricio-hector-medina-4b9048234/"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> LinkedIn
                 </a>
                 <a
-                  href="https://github.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
+                  href="https://github.com/NegroHm"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> GitHub
                 </a>
                 <a
                   href="https://twitter.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> X (Twitter)
                 </a>
                 <a
                   href="https://youtube.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> YouTube
                 </a>

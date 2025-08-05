@@ -131,6 +131,7 @@
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    
   }
 
   /* Ensure no horizontal scroll on mobile */
