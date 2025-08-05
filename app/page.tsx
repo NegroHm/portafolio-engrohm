@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import DigitalEtherBackground from "@/components/DigitalEtherBackground"
+import MobileMenu from "@/components/MobileMenu"
 
 interface Translation {
   [key: string]: {
@@ -489,11 +491,13 @@ echo "Backup completed: $BACKUP_DIR"`,
 
   return (
     <div className="min-h-screen bg-[#111111] text-[#EAEAEA] font-mono">
+      <DigitalEtherBackground />
       {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-[#111111]/95 backdrop-blur-sm border-b border-[#9370DB]/20">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <nav className="sticky top-0 z-50 nav-bar">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex justify-between items-center">
-            <div className="flex space-x-10">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-10">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -512,8 +516,8 @@ echo "Backup completed: $BACKUP_DIR"`,
               ))}
             </div>
 
-            {/* Language Switcher */}
-            <div className="flex items-center space-x-1 text-sm">
+            {/* Desktop Language Switcher */}
+            <div className="hidden md:flex items-center space-x-1 text-sm">
               <button
                 onClick={() => switchLanguage("es")}
                 className={`transition-all duration-300 ${
@@ -538,16 +542,25 @@ echo "Backup completed: $BACKUP_DIR"`,
                 EN
               </button>
             </div>
+
+            {/* Mobile Menu */}
+            <MobileMenu
+              navItems={navItems}
+              activeSection={activeSection}
+              language={language}
+              onSectionClick={scrollToSection}
+              onLanguageSwitch={switchLanguage}
+            />
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-6">
-        {/* About Section */}
-        <section id="about" className="py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
+      {/* About Section */}
+      <section id="about" className="py-12 md:py-20 section-layer-a">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-min">
             {/* Hero Module */}
-            <div className="md:col-span-2 bg-transparent p-8 fade-slide-up stagger-1">
+            <div className="lg:col-span-2 bg-transparent p-6 md:p-8 fade-slide-up stagger-1">
               <h1 className="text-3xl font-medium text-[#EAEAEA] mb-3 leading-tight">{t("heroTitle")}</h1>
               <h2 className="text-xl text-secondary mb-6 leading-relaxed">{t("heroSubtitle")}</h2>
               <p className="text-base text-secondary leading-[1.7]">
@@ -578,20 +591,24 @@ echo "Backup completed: $BACKUP_DIR"`,
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Section Separator */}
-        <div className="flex justify-center py-12">
-          <div className="w-64 h-px bg-gradient-to-r from-transparent via-[#9370DB] to-transparent"></div>
         </div>
+      </section>
 
-        {/* Skills Section */}
-        <section id="skills" className="py-20">
-          <h2 className="text-3xl font-bold text-[#EAEAEA] mb-12 text-center leading-tight">{t("skillsTitle")}</h2>
+      {/* Section Separator */}
+      <div className="flex justify-center py-12">
+        <div className="section-separator"></div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Skills Section */}
+      <section id="skills" className="py-12 md:py-20 section-layer-b">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+            {t("skillsTitle")}
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
             {/* Terminal Skills Module */}
-            <div className="md:col-span-2 bg-black/40 p-6 rounded-lg hover-glow-interactive transition-all duration-500 border border-[#333] fade-slide-up stagger-1">
+            <div className="lg:col-span-2 bg-black/40 p-4 md:p-6 rounded-lg hover-glow-interactive transition-all duration-500 border border-[#333] fade-slide-up stagger-1">
               <div className="font-mono text-sm">
                 <div className="flex items-center mb-4">
                   <div className="flex space-x-2">
@@ -673,37 +690,22 @@ echo "Backup completed: $BACKUP_DIR"`,
               <div className="text-3xl">🐧</div>
             </div>
           </div>
-        </section>
-
-        {/* Section Separator - CLI Loading Indicator */}
-        <div className="flex justify-center py-12">
-          <div className="bg-black/40 p-6 rounded-lg border border-[#333] font-mono text-sm max-w-md w-full">
-            <div className="text-[#EAEAEA] mb-3">[user@arch ~]$ sudo pacman -Syu portfolio-data</div>
-            <div className="text-secondary text-xs mb-4">:: Synchronizing package databases...</div>
-
-            <div className="space-y-3">
-              <div className="text-green-400 text-xs">downloading portfolio-data-2024.tar.xz...</div>
-              <div className="flex items-center space-x-3 text-xs">
-                <span className="text-[#EAEAEA]">[████████████░░░░░░░░] 65%</span>
-                <span className="text-secondary">2.1 MiB/3.2 MiB</span>
-              </div>
-
-              <div className="text-green-400 text-xs">extracting portfolio-data...</div>
-              <div className="flex items-center space-x-3 text-xs">
-                <span className="text-[#EAEAEA]">[██████████████████░░] 90%</span>
-                <span className="text-secondary">installing...</span>
-              </div>
-            </div>
-
-            <div className="mt-4 text-green-400 text-xs">✓ portfolio-data successfully installed</div>
-          </div>
         </div>
+      </section>
 
-        {/* Services Section */}
-        <section id="services" className="py-20">
-          <h2 className="text-3xl font-bold text-[#EAEAEA] mb-12 text-center leading-tight">{t("servicesTitle")}</h2>
+      {/* Section Separator - CLI Loading Indicator */}
+      <div className="flex justify-center py-12">
+        <div className="section-separator"></div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Services Section */}
+      <section id="services" className="py-12 md:py-20 section-layer-c">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+            {t("servicesTitle")}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {servicesData.map((service, index) => (
               <div
                 key={service.id}
@@ -807,18 +809,22 @@ echo "Backup completed: $BACKUP_DIR"`,
               </div>
             </div>
           )}
-        </section>
-
-        {/* Section Separator */}
-        <div className="flex justify-center py-12">
-          <div className="w-64 h-px bg-gradient-to-r from-transparent via-[#9370DB] to-transparent"></div>
         </div>
+      </section>
 
-        {/* Projects Section */}
-        <section id="projects" className="py-20">
-          <h2 className="text-3xl font-bold text-[#EAEAEA] mb-12 text-center leading-tight">{t("projectsTitle")}</h2>
+      {/* Section Separator */}
+      <div className="flex justify-center py-12">
+        <div className="section-separator"></div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Projects Section */}
+      <section id="projects" className="py-12 md:py-20 section-layer-d">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+            {t("projectsTitle")}
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
             <div className="bg-transparent p-8 transition-all duration-300 border border-transparent hover:border-[#9370DB]/30 rounded-lg fade-slide-up stagger-1">
               <h3 className="text-xl text-[#9370DB] mb-4 leading-tight">{t("ecommerceTitle")}</h3>
               <p className="text-sm text-secondary mb-6 leading-[1.7]">{t("ecommerceDesc")}</p>
@@ -849,26 +855,22 @@ echo "Backup completed: $BACKUP_DIR"`,
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Section Separator */}
-        <div className="flex justify-center py-12">
-          <div className="flex space-x-3">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 h-10 bg-[#9370DB] animate-pulse rounded-full"
-                style={{ animationDelay: `${i * 0.3}s` }}
-              ></div>
-            ))}
-          </div>
         </div>
+      </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-20">
-          <h2 className="text-3xl font-bold text-[#EAEAEA] mb-12 text-center leading-tight">{t("contactTitle")}</h2>
+      {/* Section Separator */}
+      <div className="flex justify-center py-12">
+        <div className="section-separator"></div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      {/* Contact Section */}
+      <section id="contact" className="py-12 md:py-20 section-layer-e">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+            {t("contactTitle")}
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
             <div className="bg-black/40 p-8 rounded-lg transition-all duration-300 border border-[#333] fade-slide-up stagger-1">
               <div className="font-mono text-sm">
                 <div className="text-[#EAEAEA] mb-4">[user@arch ~]$ contact --info</div>
@@ -916,16 +918,16 @@ echo "Backup completed: $BACKUP_DIR"`,
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="py-12 text-center border-t border-[#333] mt-20">
-          <div className="text-xs text-secondary leading-relaxed">
-            {t("footerCopyright")}
-            <div className="mt-3 opacity-20">🐧</div>
-          </div>
-        </footer>
-      </div>
+      {/* Footer */}
+      <footer className="py-12 text-center border-t border-[#333] mt-20">
+        <div className="text-xs text-secondary leading-relaxed">
+          {t("footerCopyright")}
+          <div className="mt-3 opacity-20">🐧</div>
+        </div>
+      </footer>
     </div>
   )
 }
