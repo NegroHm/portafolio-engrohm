@@ -272,6 +272,187 @@ html {
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(147, 112, 219, 0.6);
   }
+
+  /* Skills Matrix Styles */
+  .skills-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 767px) {
+    .skills-matrix {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .skill-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(147, 112, 219, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card:hover {
+    border-color: rgba(147, 112, 219, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .skill-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(147, 112, 219, 0.6), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .skill-card:hover::before {
+    left: 100%;
+  }
+
+  .skill-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .skill-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .skill-card:hover .skill-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(147, 112, 219, 0.4));
+  }
+
+  .skill-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #eaeaea;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .skill-level {
+    font-size: 0.75rem;
+    color: rgba(234, 234, 234, 0.6);
+    margin-top: 0.25rem;
+  }
+
+  .progress-container {
+    position: relative;
+    height: 3px;
+    background: rgba(147, 112, 219, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(147, 112, 219, 0.6), rgba(147, 112, 219, 0.9));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.5s ease-out;
+    position: relative;
+  }
+
+  .progress-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  .skill-card.visible .progress-bar {
+    width: var(--progress-width);
+  }
+
+  /* Skill-specific icon colors */
+  .skill-php {
+    color: #777bb4;
+  }
+  .skill-java {
+    color: #ed8b00;
+  }
+  .skill-cpp {
+    color: #00599c;
+  }
+  .skill-html {
+    color: #e34f26;
+  }
+  .skill-css {
+    color: #1572b6;
+  }
+  .skill-sql {
+    color: #336791;
+  }
+  .skill-ux {
+    color: #ff6b6b;
+  }
+  .skill-linux {
+    color: #fcc624;
+  }
+
+  /* Hover glow effects for icons */
+  .skill-card:hover .skill-php {
+    text-shadow: 0 0 12px rgba(119, 123, 180, 0.6);
+  }
+  .skill-card:hover .skill-java {
+    text-shadow: 0 0 12px rgba(237, 139, 0, 0.6);
+  }
+  .skill-card:hover .skill-cpp {
+    text-shadow: 0 0 12px rgba(0, 89, 156, 0.6);
+  }
+  .skill-card:hover .skill-html {
+    text-shadow: 0 0 12px rgba(227, 79, 38, 0.6);
+  }
+  .skill-card:hover .skill-css {
+    text-shadow: 0 0 12px rgba(21, 114, 182, 0.6);
+  }
+  .skill-card:hover .skill-sql {
+    text-shadow: 0 0 12px rgba(51, 103, 145, 0.6);
+  }
+  .skill-card:hover .skill-ux {
+    text-shadow: 0 0 12px rgba(255, 107, 107, 0.6);
+  }
+  .skill-card:hover .skill-linux {
+    text-shadow: 0 0 12px rgba(252, 198, 36, 0.6);
+  }
 }
 
 /* Digital Ether Background - Desktop Only */

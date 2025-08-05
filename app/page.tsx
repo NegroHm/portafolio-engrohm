@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect, useRef } from "react"
 import DigitalEtherBackground from "@/components/DigitalEtherBackground"
 import MobileMenu from "@/components/MobileMenu"
@@ -38,7 +40,7 @@ const translations: Translation = {
   skillsInstalled: { en: "✓ Skills successfully installed", es: "✓ Habilidades instaladas exitosamente" },
   skillsPlaceholder: { en: "Type a command...", es: "Escribe un comando..." },
   skillsError: {
-    en: "Contacta con Mauricio Medina para poder solucionarlo",
+    en: "Contacta with Mauricio Medina for poder solucionarlo",
     es: "Contact Mauricio Medina to solve this issue",
   },
 
@@ -131,6 +133,11 @@ export default function Portfolio() {
   const [visibleSections, setVisibleSections] = useState(new Set())
   const [selectedService, setSelectedService] = useState<number | null>(null)
   const [language, setLanguage] = useState<"en" | "es">("en")
+
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [downloadText, setDownloadText] = useState("Download CV")
+  const [showContactModal, setShowContactModal] = useState(false)
+
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   const t = (key: string) => translations[key]?.[language] || key
@@ -154,7 +161,7 @@ Tamaño Total Instalado: 1024.00 MiB
 
   const navItems = [
     { id: "about", label: t("navAbout") },
-    { id: "skills", label: t("navSkills") },
+    { id: "skills-matrix", label: t("navSkills") },
     { id: "services", label: t("navServices") },
     { id: "projects", label: t("navProjects") },
     { id: "contact", label: t("navContact") },
@@ -404,6 +411,39 @@ echo "Backup completed: $BACKUP_DIR"`,
     },
   ]
 
+  const handleDownloadCV = async () => {
+    if (isDownloading) return
+
+    setIsDownloading(true)
+
+    // Animation sequence
+    setDownloadText("Fetching: cv_mauricio_medina.pdf...")
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    setDownloadText("Progress: [████████████]")
+    await new Promise((resolve) => setTimeout(resolve, 800))
+
+    setDownloadText("Decompressing package...")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    setDownloadText("Success! Opening file...")
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Trigger download (replace with actual CV file path)
+    const link = document.createElement("a")
+    link.href = "/cv_mauricio_medina.pdf" // Replace with actual CV path
+    link.download = "cv_mauricio_medina.pdf"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    // Reset after delay
+    setTimeout(() => {
+      setDownloadText("Download CV")
+      setIsDownloading(false)
+    }, 2000)
+  }
+
   useEffect(() => {
     // Refined cursor blinking with standard terminal timing
     const cursorInterval = setInterval(() => {
@@ -442,7 +482,7 @@ echo "Backup completed: $BACKUP_DIR"`,
 
   useEffect(() => {
     // Typing animation for terminal
-    if (visibleSections.has("skills") && !isTyping) {
+    if (visibleSections.has("skills-matrix") && !isTyping) {
       setIsTyping(true)
       let index = 0
       const typeInterval = setInterval(() => {
@@ -477,6 +517,26 @@ echo "Backup completed: $BACKUP_DIR"`,
       document.body.style.overflow = "unset"
     }
   }, [selectedService])
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setShowContactModal(false)
+      }
+    }
+
+    if (showContactModal) {
+      document.addEventListener("keydown", handleEscape)
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape)
+      document.body.style.overflow = "unset"
+    }
+  }, [showContactModal])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -567,6 +627,23 @@ echo "Backup completed: $BACKUP_DIR"`,
                 <span className="text-[#9370DB]">// </span>
                 {t("heroDescription")}
               </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <button
+                  onClick={handleDownloadCV}
+                  disabled={isDownloading}
+                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] flex items-center justify-center"
+                >
+                  {downloadText}
+                </button>
+                <button
+                  onClick={() => setShowContactModal(true)}
+                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px]"
+                >
+                  Contact Me
+                </button>
+              </div>
             </div>
 
             {/* Profile Picture Module */}
@@ -590,6 +667,102 @@ echo "Backup completed: $BACKUP_DIR"`,
                 <span className="text-secondary">{t("statusOnline")}</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Matrix Section */}
+      <section id="skills-matrix" className="py-12 md:py-20 section-layer-b">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+            <span className="text-[#9370DB]">// </span>Technical Skills
+          </h2>
+
+          <div className="skills-matrix">
+            {[
+              {
+                name: "PHP",
+                level: "Expert",
+                progress: 95,
+                icon: "🐘",
+                className: "skill-php",
+                description: "Server-side development & frameworks",
+              },
+              {
+                name: "Java",
+                level: "Advanced",
+                progress: 85,
+                icon: "☕",
+                className: "skill-java",
+                description: "Enterprise applications & Spring",
+              },
+              {
+                name: "C++",
+                level: "Proficient",
+                progress: 75,
+                icon: "⚡",
+                className: "skill-cpp",
+                description: "System programming & algorithms",
+              },
+              {
+                name: "HTML5",
+                level: "Expert",
+                progress: 95,
+                icon: "🌐",
+                className: "skill-html",
+                description: "Semantic markup & accessibility",
+              },
+              {
+                name: "CSS3",
+                level: "Expert",
+                progress: 90,
+                icon: "🎨",
+                className: "skill-css",
+                description: "Modern styling & animations",
+              },
+              {
+                name: "SQL",
+                level: "Advanced",
+                progress: 88,
+                icon: "🗄️",
+                className: "skill-sql",
+                description: "Database design & optimization",
+              },
+              {
+                name: "UX/UI Design",
+                level: "Advanced",
+                progress: 82,
+                icon: "✨",
+                className: "skill-ux",
+                description: "User experience & interface design",
+              },
+              {
+                name: "Linux Admin",
+                level: "Expert",
+                progress: 92,
+                icon: "🐧",
+                className: "skill-linux",
+                description: "System administration & scripting",
+              },
+            ].map((skill, index) => (
+              <div
+                key={skill.name}
+                className={`skill-card fade-slide-up stagger-${index + 1}`}
+                style={{ "--progress-width": `${skill.progress}%` } as React.CSSProperties}
+              >
+                <div className="skill-header">
+                  <div className={`skill-icon ${skill.className}`}>{skill.icon}</div>
+                  <div>
+                    <div className="skill-name">{skill.name}</div>
+                    <div className="skill-level">{skill.level}</div>
+                  </div>
+                </div>
+                <div className="text-xs text-secondary mb-3 leading-relaxed">{skill.description}</div>
+                <div className="progress-container">
+                  <div className="progress-bar"></div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -923,11 +1096,81 @@ echo "Backup completed: $BACKUP_DIR"`,
 
       {/* Footer */}
       <footer className="py-12 text-center border-t border-[#333] mt-20">
-        <div className="text-xs text-secondary leading-relaxed">
-          {t("footerCopyright")}
-          <div className="mt-3 opacity-20">🐧</div>
-        </div>
+        <div className="text-xs text-secondary leading-relaxed">{t("footerCopyright")}</div>
+        <div className="mt-3 opacity-20">🐧</div>
       </footer>
+
+      {/* Contact Modal */}
+      {showContactModal && (
+        <div
+          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-6 animate-fadeIn"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowContactModal(false)
+            }
+          }}
+        >
+          <div className="bg-[#111111] border border-[#9370DB]/30 rounded-lg max-w-md w-full shadow-2xl shadow-[#9370DB]/20 animate-scaleIn">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b border-[#333]">
+              <h2 className="text-xl font-bold text-[#EAEAEA] leading-tight font-mono">
+                <span className="text-[#9370DB]">// </span>Get in Touch
+              </h2>
+              <button
+                onClick={() => setShowContactModal(false)}
+                className="text-secondary hover:text-[#9370DB] hover:glow-purple transition-all duration-300 text-2xl font-mono w-8 h-8 flex items-center justify-center"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <div className="space-y-4">
+                <a
+                  href="https://wa.me/1234567890"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                >
+                  <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
+                    📱
+                  </div>
+                  <span className="text-[#EAEAEA] font-mono text-sm group-hover:text-[#9370DB] transition-all duration-300">
+                    WhatsApp
+                  </span>
+                </a>
+
+                <a
+                  href="https://instagram.com/mauricio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                >
+                  <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
+                    📷
+                  </div>
+                  <span className="text-[#EAEAEA] font-mono text-sm group-hover:text-[#9370DB] transition-all duration-300">
+                    Instagram
+                  </span>
+                </a>
+
+                <a
+                  href="mailto:mauricio@example.com"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                >
+                  <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
+                    ✉️
+                  </div>
+                  <span className="text-[#EAEAEA] font-mono text-sm group-hover:text-[#9370DB] transition-all duration-300">
+                    Email
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
