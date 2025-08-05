@@ -54,10 +54,10 @@ export default function MobileMenu({
       </button>
 
       {/* Overlay */}
-      <div className={`mobile-menu-overlay ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(false)} />
+      <div className={`mobile-menu-overlay md:hidden ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(false)} />
 
       {/* Menu Panel */}
-      <div className={`mobile-menu-panel ${isOpen ? "open" : ""}`}>
+      <div className={`mobile-menu-panel block md:!hidden ${isOpen ? "open" : ""}`}>
         {/* Navigation Links */}
         <nav className="flex-1 flex flex-col justify-center space-y-8">
           {navItems.map((item) => (

@@ -125,6 +125,40 @@ const translations: Translation = {
   modalContactBtn: { en: "Contact Me", es: "Contáctame" },
 }
 
+// Update the projects section data
+const projectsData = [
+  {
+    id: 1,
+    title: "E-Commerce Platform",
+    description:
+      "Built a scalable e-commerce solution with custom PHP backend and optimized database architecture, handling 10k+ daily transactions with real-time inventory management.",
+    technologies: ["PHP", "MySQL", "Redis", "Docker", "Linux"],
+    liveDemo: "https://demo-ecommerce.example.com",
+    github: "https://github.com/mauricio/ecommerce-platform",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "Automation Workflow System",
+    description:
+      "Developed comprehensive automation workflows using n8n, reducing manual tasks by 80% and improving operational efficiency across multiple business processes.",
+    technologies: ["n8n", "Node.js", "PostgreSQL", "Docker", "API Integration"],
+    liveDemo: "https://automation-demo.example.com",
+    github: "https://github.com/mauricio/automation-system",
+    featured: true,
+  },
+  {
+    id: 3,
+    title: "WordPress Performance Suite",
+    description:
+      "Created a comprehensive WordPress optimization plugin that improves site speed by 60% through advanced caching, image optimization, and database cleanup.",
+    technologies: ["WordPress", "PHP", "JavaScript", "MySQL", "Redis"],
+    liveDemo: "https://wp-performance.example.com",
+    github: "https://github.com/mauricio/wp-performance-suite",
+    featured: false,
+  },
+]
+
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("about")
   const [showCursor, setShowCursor] = useState(true)
@@ -616,14 +650,14 @@ echo "Backup completed: $BACKUP_DIR"`,
       </nav>
 
       {/* About Section */}
-      <section id="about" className="py-12 md:py-20 section-layer-a">
+      <section id="about" className="py-12 md:py-20 section-primary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-min">
             {/* Hero Module */}
             <div className="lg:col-span-2 bg-transparent p-6 md:p-8 fade-slide-up stagger-1">
-              <h1 className="text-3xl font-medium text-[#EAEAEA] mb-3 leading-tight">{t("heroTitle")}</h1>
-              <h2 className="text-xl text-secondary mb-6 leading-relaxed">{t("heroSubtitle")}</h2>
-              <p className="text-base text-secondary leading-[1.7]">
+              <h1 className="text-3xl font-medium text-[#EAEAEA] mb-3 leading-tight font-mono">{t("heroTitle")}</h1>
+              <h2 className="text-xl text-secondary mb-6 leading-relaxed font-mono">{t("heroSubtitle")}</h2>
+              <p className="text-base text-secondary leading-[1.7] font-sans">
                 <span className="text-[#9370DB]">// </span>
                 {t("heroDescription")}
               </p>
@@ -633,13 +667,13 @@ echo "Backup completed: $BACKUP_DIR"`,
                 <button
                   onClick={handleDownloadCV}
                   disabled={isDownloading}
-                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] flex items-center justify-center"
+                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] flex items-center justify-center hover-glow-clickable"
                 >
                   {downloadText}
                 </button>
                 <button
                   onClick={() => setShowContactModal(true)}
-                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px]"
+                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] hover-glow-clickable"
                 >
                   Contact Me
                 </button>
@@ -659,10 +693,10 @@ echo "Backup completed: $BACKUP_DIR"`,
 
             {/* Status Module */}
             <div className="bg-transparent p-8 fade-slide-up stagger-3">
-              <div className="text-sm text-[#9370DB] mb-4">{t("statusTitle")}</div>
-              <div className="text-base text-[#EAEAEA] mb-3 leading-relaxed">{t("statusAvailable")}</div>
-              <div className="text-sm text-secondary mb-4 leading-relaxed">{t("statusLocation")}</div>
-              <div className="flex items-center text-sm">
+              <div className="text-sm text-[#9370DB] mb-4 font-mono">{t("statusTitle")}</div>
+              <div className="text-base text-[#EAEAEA] mb-3 leading-relaxed font-sans">{t("statusAvailable")}</div>
+              <div className="text-sm text-secondary mb-4 leading-relaxed font-sans">{t("statusLocation")}</div>
+              <div className="flex items-center text-sm font-sans">
                 <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></span>
                 <span className="text-secondary">{t("statusOnline")}</span>
               </div>
@@ -672,9 +706,9 @@ echo "Backup completed: $BACKUP_DIR"`,
       </section>
 
       {/* Skills Matrix Section */}
-      <section id="skills-matrix" className="py-12 md:py-20 section-layer-b">
+      <section id="skills-matrix" className="py-12 md:py-20 section-secondary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
             <span className="text-[#9370DB]">// </span>Technical Skills
           </h2>
 
@@ -747,17 +781,17 @@ echo "Backup completed: $BACKUP_DIR"`,
             ].map((skill, index) => (
               <div
                 key={skill.name}
-                className={`skill-card fade-slide-up stagger-${index + 1}`}
+                className={`skill-card fade-slide-up stagger-${index + 1} hover-scale-subtle`}
                 style={{ "--progress-width": `${skill.progress}%` } as React.CSSProperties}
               >
                 <div className="skill-header">
                   <div className={`skill-icon ${skill.className}`}>{skill.icon}</div>
                   <div>
-                    <div className="skill-name">{skill.name}</div>
-                    <div className="skill-level">{skill.level}</div>
+                    <div className="skill-name font-mono">{skill.name}</div>
+                    <div className="skill-level font-sans">{skill.level}</div>
                   </div>
                 </div>
-                <div className="text-xs text-secondary mb-3 leading-relaxed">{skill.description}</div>
+                <div className="text-xs text-secondary mb-3 leading-relaxed font-sans">{skill.description}</div>
                 <div className="progress-container">
                   <div className="progress-bar"></div>
                 </div>
@@ -773,9 +807,9 @@ echo "Backup completed: $BACKUP_DIR"`,
       </div>
 
       {/* Skills Section */}
-      <section id="skills" className="py-12 md:py-20 section-layer-b">
+      <section id="skills" className="py-12 md:py-20 section-primary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
             {t("skillsTitle")}
           </h2>
 
@@ -823,7 +857,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                     <span className="text-[#EAEAEA]">[user@arch ~]$ </span>
                     <input
                       type="text"
-                      className="bg-transparent border-none outline-none text-green-400 flex-1 ml-2 placeholder-secondary"
+                      className="bg-transparent border-none outline-none text-green-400 flex-1 ml-2 placeholder-secondary font-sans"
                       placeholder={t("skillsPlaceholder")}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -836,8 +870,8 @@ echo "Backup completed: $BACKUP_DIR"`,
                             newCommand.textContent = `[user@arch ~]$ ${command}`
 
                             const errorMessage = document.createElement("div")
-                            errorMessage.className = "text-red-400 text-xs mb-3 leading-relaxed"
-                            errorMessage.innerHTML = `bash: ${command}: command not found<br/><span class="text-[#9370DB]">Error:</span> <span class="text-secondary">${t("skillsError")}</span><br/><span class="text-secondary">Email:</span> <a href="mailto:mauricio@example.com" class="text-[#9370DB] hover:glow-purple transition-all">mauricio@example.com</a>`
+                            errorMessage.className = "text-red-400 text-xs mb-3 leading-relaxed font-sans"
+                            errorMessage.innerHTML = `bash: ${command}: command not found<br/><span class="text-[#9370DB]">Error:</span> <span class="text-secondary">${t("skillsError")}</span><br/><span class="text-secondary">Email:</span> <a href="mailto:mauricio@example.com" class="text-[#9370DB] hover:glow-purple transition-all hover-glow-clickable">mauricio@example.com</a>`
 
                             terminalDiv?.appendChild(newCommand)
                             terminalDiv?.appendChild(errorMessage)
@@ -857,9 +891,9 @@ echo "Backup completed: $BACKUP_DIR"`,
 
             {/* Linux Detail Module */}
             <div className="bg-black/20 p-6 rounded-lg transition-all duration-300 text-center border border-[#333] fade-slide-up stagger-2">
-              <div className="text-sm text-[#9370DB] mb-3">uname -a</div>
-              <div className="text-xs text-secondary mb-4 leading-relaxed">Linux arch 6.6.1-zen</div>
-              <div className="text-sm text-[#EAEAEA] mb-3">Powered by Linux</div>
+              <div className="text-sm text-[#9370DB] mb-3 font-mono">uname -a</div>
+              <div className="text-xs text-secondary mb-4 leading-relaxed font-sans">Linux arch 6.6.1-zen</div>
+              <div className="text-sm text-[#EAEAEA] mb-3 font-sans">Powered by Linux</div>
               <div className="text-3xl">🐧</div>
             </div>
           </div>
@@ -872,9 +906,9 @@ echo "Backup completed: $BACKUP_DIR"`,
       </div>
 
       {/* Services Section */}
-      <section id="services" className="py-12 md:py-20 section-layer-c">
+      <section id="services" className="py-12 md:py-20 section-secondary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
             {t("servicesTitle")}
           </h2>
 
@@ -885,9 +919,9 @@ echo "Backup completed: $BACKUP_DIR"`,
                 onClick={() => setSelectedService(service.id)}
                 className={`bg-transparent p-8 hover-glow-interactive transition-all duration-500 border border-transparent hover:border-[#9370DB]/30 rounded-lg cursor-pointer active:scale-95 fade-slide-up stagger-${index + 1}`}
               >
-                <h3 className="text-lg text-[#9370DB] mb-4 leading-tight">{service.title}</h3>
-                <p className="text-sm text-secondary mb-6 leading-[1.7]">{service.shortDescription}</p>
-                <div className="text-xs text-[#EAEAEA]">
+                <h3 className="text-lg text-[#9370DB] mb-4 leading-tight font-mono">{service.title}</h3>
+                <p className="text-sm text-secondary mb-6 leading-[1.7] font-sans">{service.shortDescription}</p>
+                <div className="text-xs text-[#EAEAEA] font-mono">
                   <span className="text-[#9370DB]">{">"}</span> {t("servicesLearnMore")}
                 </div>
               </div>
@@ -907,7 +941,7 @@ echo "Backup completed: $BACKUP_DIR"`,
               <div className="bg-[#111111] border border-[#9370DB]/30 rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-[#9370DB]/20 animate-scaleIn">
                 {/* Modal Header */}
                 <div className="flex justify-between items-center p-8 border-b border-[#333]">
-                  <h2 className="text-2xl font-bold text-[#EAEAEA] leading-tight">
+                  <h2 className="text-2xl font-bold text-[#EAEAEA] leading-tight font-mono">
                     {servicesData[selectedService].title}
                   </h2>
                   <button
@@ -924,7 +958,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-lg text-[#9370DB] mb-4 font-mono">{t("modalOverview")}</h3>
-                      <p className="text-sm text-[#EAEAEA] leading-[1.7]">
+                      <p className="text-sm text-[#EAEAEA] leading-[1.7] font-sans">
                         {servicesData[selectedService].expandedDescription}
                       </p>
                     </div>
@@ -933,7 +967,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                       <h3 className="text-lg text-[#9370DB] mb-4 font-mono">{t("modalFeatures")}</h3>
                       <div className="space-y-2">
                         {servicesData[selectedService].features.map((feature, index) => (
-                          <div key={index} className="text-sm text-[#EAEAEA] leading-relaxed">
+                          <div key={index} className="text-sm text-[#EAEAEA] leading-relaxed font-sans">
                             <span className="text-[#9370DB]">{feature.split(" ")[0]}</span>
                             <span className="text-secondary"> {feature.substring(2)}</span>
                           </div>
@@ -966,13 +1000,13 @@ echo "Backup completed: $BACKUP_DIR"`,
 
                     <div className="bg-black/20 p-6 rounded-lg border border-[#333]">
                       <h4 className="text-sm text-[#9370DB] mb-3 font-mono">{t("modalReady")}</h4>
-                      <p className="text-xs text-secondary mb-4 leading-relaxed">{t("modalContact")}</p>
+                      <p className="text-xs text-secondary mb-4 leading-relaxed font-sans">{t("modalContact")}</p>
                       <button
                         onClick={() => {
                           setSelectedService(null)
                           scrollToSection("contact")
                         }}
-                        className="bg-[#9370DB] hover:bg-[#9370DB]/80 text-white px-6 py-3 rounded text-sm font-mono transition-all duration-300 hover:shadow-lg hover:shadow-[#9370DB]/30"
+                        className="bg-[#9370DB] hover:bg-[#9370DB]/80 text-white px-6 py-3 rounded text-sm font-mono transition-all duration-300 hover:shadow-lg hover:shadow-[#9370DB]/30 hover-glow-clickable"
                       >
                         {t("modalContactBtn")}
                       </button>
@@ -991,42 +1025,57 @@ echo "Backup completed: $BACKUP_DIR"`,
       </div>
 
       {/* Projects Section */}
-      <section id="projects" className="py-12 md:py-20 section-layer-d">
+      <section id="projects" className="py-12 md:py-20 section-primary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
             {t("projectsTitle")}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-            <div className="bg-transparent p-8 transition-all duration-300 border border-transparent hover:border-[#9370DB]/30 rounded-lg fade-slide-up stagger-1">
-              <h3 className="text-xl text-[#9370DB] mb-4 leading-tight">{t("ecommerceTitle")}</h3>
-              <p className="text-sm text-secondary mb-6 leading-[1.7]">{t("ecommerceDesc")}</p>
-              <div className="bg-black/40 p-4 rounded text-xs text-green-400 font-mono mb-6 leading-relaxed">
-                $ sudo deploy --platform=custom --tech=php,mysql
-                <br />
-                <span className="text-secondary">✓ Deployment successful</span>
+            {projectsData.map((project, index) => (
+              <div
+                key={project.id}
+                className={`bg-transparent p-8 transition-all duration-300 border border-transparent hover:border-[#9370DB]/30 rounded-lg fade-slide-up stagger-${
+                  index + 1
+                } hover-scale-subtle`}
+              >
+                <h3 className="text-xl text-[#9370DB] mb-4 leading-tight font-mono">{project.title}</h3>
+                <p className="text-sm text-secondary mb-6 leading-[1.7] font-sans">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech) => (
+                    <span key={tech} className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded font-mono">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    {project.liveDemo && (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 font-mono hover-glow-clickable"
+                      >
+                        <span className="text-[#9370DB]">{">"}</span> Live Demo
+                      </a>
+                    )}
+                  </div>
+                  <div>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 font-mono hover-glow-clickable"
+                      >
+                        <span className="text-[#9370DB]">{">"}</span> GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-3">
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">PHP</span>
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">MySQL</span>
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">Linux</span>
-              </div>
-            </div>
-
-            <div className="bg-transparent p-8 transition-all duration-300 border border-transparent hover:border-[#9370DB]/30 rounded-lg fade-slide-up stagger-2">
-              <h3 className="text-xl text-[#9370DB] mb-4 leading-tight">{t("automationProjectTitle")}</h3>
-              <p className="text-sm text-secondary mb-6 leading-[1.7]">{t("automationProjectDesc")}</p>
-              <div className="bg-black/40 p-4 rounded text-xs text-green-400 font-mono mb-6 leading-relaxed">
-                $ ./automate --workflow=business --tool=n8n
-                <br />
-                <span className="text-secondary">✓ 15 workflows activated</span>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">n8n</span>
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">API Integration</span>
-                <span className="px-3 py-1 bg-[#9370DB]/20 text-[#9370DB] text-xs rounded">Automation</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1037,9 +1086,9 @@ echo "Backup completed: $BACKUP_DIR"`,
       </div>
 
       {/* Contact Section */}
-      <section id="contact" className="py-12 md:py-20 section-layer-e">
+      <section id="contact" className="py-12 md:py-20 section-secondary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
             {t("contactTitle")}
           </h2>
 
@@ -1047,10 +1096,13 @@ echo "Backup completed: $BACKUP_DIR"`,
             <div className="bg-black/40 p-8 rounded-lg transition-all duration-300 border border-[#333] fade-slide-up stagger-1">
               <div className="font-mono text-sm">
                 <div className="text-[#EAEAEA] mb-4">[user@arch ~]$ contact --info</div>
-                <div className="space-y-3 text-secondary leading-relaxed">
+                <div className="space-y-3 text-secondary leading-relaxed font-sans">
                   <div>
                     Email:{" "}
-                    <a href="mailto:mauricio@example.com" className="text-[#9370DB] hover:glow-purple transition-all">
+                    <a
+                      href="mailto:mauricio@example.com"
+                      className="text-[#9370DB] hover:glow-purple transition-all hover-glow-clickable"
+                    >
                       mauricio@example.com
                     </a>
                   </div>
@@ -1062,29 +1114,29 @@ echo "Backup completed: $BACKUP_DIR"`,
             </div>
 
             <div className="bg-transparent p-8 transition-all duration-300 fade-slide-up stagger-2">
-              <div className="text-sm text-[#9370DB] mb-6">{t("socialLinks")}</div>
+              <div className="text-sm text-[#9370DB] mb-6 font-mono">{t("socialLinks")}</div>
               <div className="space-y-4">
                 <a
                   href="https://linkedin.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
                 >
                   <span className="text-[#9370DB]">{">"}</span> LinkedIn
                 </a>
                 <a
                   href="https://github.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
                 >
                   <span className="text-[#9370DB]">{">"}</span> GitHub
                 </a>
                 <a
                   href="https://twitter.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
                 >
                   <span className="text-[#9370DB]">{">"}</span> X (Twitter)
                 </a>
                 <a
                   href="https://youtube.com"
-                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300"
+                  className="block text-[#EAEAEA] hover:text-[#9370DB] hover:glow-purple transition-all duration-300 hover-glow-clickable"
                 >
                   <span className="text-[#9370DB]">{">"}</span> YouTube
                 </a>
@@ -1096,7 +1148,7 @@ echo "Backup completed: $BACKUP_DIR"`,
 
       {/* Footer */}
       <footer className="py-12 text-center border-t border-[#333] mt-20">
-        <div className="text-xs text-secondary leading-relaxed">{t("footerCopyright")}</div>
+        <div className="text-xs text-secondary leading-relaxed font-sans">{t("footerCopyright")}</div>
         <div className="mt-3 opacity-20">🐧</div>
       </footer>
 
@@ -1131,7 +1183,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                   href="https://wa.me/1234567890"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group hover-glow-clickable"
                 >
                   <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
                     📱
@@ -1145,7 +1197,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                   href="https://instagram.com/mauricio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group hover-glow-clickable"
                 >
                   <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
                     📷
@@ -1157,7 +1209,7 @@ echo "Backup completed: $BACKUP_DIR"`,
 
                 <a
                   href="mailto:mauricio@example.com"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#9370DB]/10 hover:border-[#9370DB]/30 border border-transparent transition-all duration-300 group hover-glow-clickable"
                 >
                   <div className="text-xl group-hover:text-[#9370DB] group-hover:glow-purple transition-all duration-300">
                     ✉️
