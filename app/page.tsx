@@ -108,6 +108,7 @@ const translations: Translation = {
 
   // Footer
   footerCopyright: {
+    //! MOdificar
     en: "© 2024 Mauricio Medina • Built with passion for clean code",
     es: "© 2024 Mauricio Medina • Construido con pasión por el código limpio",
   },
@@ -730,7 +731,7 @@ echo "Backup completed: $BACKUP_DIR"`,
               {
                 name: "PHP",
                 level: "Expert",
-                progress: 95,
+                progress: 75,
                 icon: "🐘",
                 className: "skill-php",
                 description: "Server-side development & frameworks",
@@ -738,7 +739,7 @@ echo "Backup completed: $BACKUP_DIR"`,
               {
                 name: "Java",
                 level: "Advanced",
-                progress: 85,
+                progress: 55,
                 icon: "☕",
                 className: "skill-java",
                 description: "Enterprise applications & Spring",
@@ -1136,7 +1137,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                   <span className="text-[#9370DB]">{">"}</span> LinkedIn
                 </a>
                 <a
-                  href="https://github.com/NegroHm"
+                  href="https://github.com/NegroHmd"
                   className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> GitHub
