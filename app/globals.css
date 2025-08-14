@@ -131,7 +131,6 @@
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    
   }
 
   /* Ensure no horizontal scroll on mobile */
@@ -276,41 +275,225 @@ html {
     position: relative;
   }
 
-  /* Skills Matrix Styles */
-  .skills-matrix {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+  /* Modern Floating Navigation Bar */
+  .floating-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(147, 112, 219, 0.2);
+    border-radius: 50px;
+    padding: 12px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(147, 112, 219, 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    max-width: calc(100vw - 40px);
+    width: auto;
   }
 
-  @media (max-width: 767px) {
-    .skills-matrix {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+  .floating-nav:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(147, 112, 219, 0.3);
+    border-color: rgba(147, 112, 219, 0.4);
+  }
+
+  .nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(234, 234, 234, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .nav-link:hover {
+    color: #9370db;
+    background: rgba(147, 112, 219, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .nav-link.active {
+    color: #9370db;
+    background: rgba(147, 112, 219, 0.15);
+    box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
+  }
+
+  .nav-link.active::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #9370db;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(147, 112, 219, 0.8);
+  }
+
+  .arch-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(147, 112, 219, 0.1);
+    border: 1px solid rgba(147, 112, 219, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .arch-logo:hover {
+    background: rgba(147, 112, 219, 0.2);
+    border-color: rgba(147, 112, 219, 0.4);
+    transform: scale(1.05);
+  }
+
+  .language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(147, 112, 219, 0.05);
+    border: 1px solid rgba(147, 112, 219, 0.1);
+  }
+
+  .language-btn {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .language-btn.active {
+    background: rgba(147, 112, 219, 0.2);
+    color: #9370db;
+  }
+
+  .language-btn:not(.active) {
+    color: rgba(234, 234, 234, 0.6);
+  }
+
+  .language-btn:not(.active):hover {
+    color: rgba(234, 234, 234, 0.8);
+    background: rgba(147, 112, 219, 0.1);
+  }
+
+  /* Mobile Navigation Adjustments */
+  @media (max-width: 768px) {
+    .floating-nav {
+      top: 10px;
+      padding: 10px 16px;
+      border-radius: 25px;
+    }
+
+    .nav-content {
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .mobile-nav-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      background: rgba(147, 112, 219, 0.1);
+      border: 1px solid rgba(147, 112, 219, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-toggle:hover {
+      background: rgba(147, 112, 219, 0.2);
+      border-color: rgba(147, 112, 219, 0.4);
     }
   }
 
-  .skill-card {
-    background: rgba(0, 0, 0, 0.4);
+  /* Enhanced Technical Skills Section */
+  .skills-showcase {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(13, 13, 13, 0.9) 100%);
+    border-radius: 24px;
+    padding: 3rem;
+    border: 1px solid rgba(147, 112, 219, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skills-showcase::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(147, 112, 219, 0.5) 50%, transparent 100%);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .skills-showcase {
+      padding: 2rem;
+      border-radius: 16px;
+    }
+  }
+
+  .skill-item {
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(147, 112, 219, 0.15);
-    border-radius: 12px;
-    padding: 2rem;
+    border-radius: 16px;
+    padding: 1.5rem;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
   }
 
-  .skill-card:hover {
+  .skill-item:hover {
     border-color: rgba(147, 112, 219, 0.4);
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
     transform: translateY(-4px);
-    box-shadow: 0 10px 40px rgba(147, 112, 219, 0.1);
+    box-shadow: 0 12px 40px rgba(147, 112, 219, 0.15);
   }
 
-  .skill-card::before {
+  .skill-item::before {
     content: "";
     position: absolute;
     top: 0;
@@ -321,58 +504,96 @@ html {
     transition: left 0.8s ease;
   }
 
-  .skill-card:hover::before {
+  .skill-item:hover::before {
     left: 100%;
   }
 
   .skill-header {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .skill-icon {
-    width: 40px;
-    height: 40px;
+  .skill-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    position: relative;
+    transition: all 0.4s ease;
+    background: rgba(147, 112, 219, 0.1);
+    border: 1px solid rgba(147, 112, 219, 0.2);
+  }
+
+  .skill-item:hover .skill-icon-wrapper {
+    transform: scale(1.1);
+    background: rgba(147, 112, 219, 0.2);
+    border-color: rgba(147, 112, 219, 0.4);
+    box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
+  }
+
+  .skill-icon {
+    width: 28px;
+    height: 28px;
     transition: all 0.4s ease;
   }
 
-  .skill-card:hover .skill-icon {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 12px rgba(147, 112, 219, 0.5));
+  .skill-info {
+    flex: 1;
   }
 
   .skill-name {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #eaeaea;
     font-family: "JetBrains Mono", monospace;
+    margin-bottom: 0.25rem;
   }
 
   .skill-level {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    color: rgba(234, 234, 234, 0.6);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+  }
+
+  .skill-progress {
+    margin-top: 1rem;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-text {
+    font-size: 0.75rem;
     color: rgba(234, 234, 234, 0.7);
-    margin-top: 0.25rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .progress-percentage {
+    font-size: 0.75rem;
+    color: #9370db;
+    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
   }
 
   .progress-container {
     position: relative;
-    height: 4px;
-    background: rgba(147, 112, 219, 0.15);
+    height: 6px;
+    background: rgba(147, 112, 219, 0.1);
     border-radius: 3px;
     overflow: hidden;
-    margin-top: 1.5rem;
   }
 
   .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, rgba(147, 112, 219, 0.7), rgba(147, 112, 219, 1));
+    background: linear-gradient(90deg, rgba(147, 112, 219, 0.6), rgba(147, 112, 219, 1));
     border-radius: 3px;
     width: 0;
     transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -386,7 +607,7 @@ html {
     right: 0;
     width: 30px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
     animation: shimmer 2.5s infinite;
   }
 
@@ -404,8 +625,89 @@ html {
     }
   }
 
-  .skill-card.visible .progress-bar {
+  .skill-item.visible .progress-bar {
     width: var(--progress-width);
+  }
+
+  /* Skill-specific colors */
+  .skill-php .skill-icon-wrapper {
+    background: rgba(119, 123, 180, 0.1);
+    border-color: rgba(119, 123, 180, 0.2);
+  }
+  .skill-php:hover .skill-icon-wrapper {
+    background: rgba(119, 123, 180, 0.2);
+    border-color: rgba(119, 123, 180, 0.4);
+    box-shadow: 0 0 20px rgba(119, 123, 180, 0.3);
+  }
+
+  .skill-java .skill-icon-wrapper {
+    background: rgba(237, 139, 0, 0.1);
+    border-color: rgba(237, 139, 0, 0.2);
+  }
+  .skill-java:hover .skill-icon-wrapper {
+    background: rgba(237, 139, 0, 0.2);
+    border-color: rgba(237, 139, 0, 0.4);
+    box-shadow: 0 0 20px rgba(237, 139, 0, 0.3);
+  }
+
+  .skill-cpp .skill-icon-wrapper {
+    background: rgba(0, 89, 156, 0.1);
+    border-color: rgba(0, 89, 156, 0.2);
+  }
+  .skill-cpp:hover .skill-icon-wrapper {
+    background: rgba(0, 89, 156, 0.2);
+    border-color: rgba(0, 89, 156, 0.4);
+    box-shadow: 0 0 20px rgba(0, 89, 156, 0.3);
+  }
+
+  .skill-html .skill-icon-wrapper {
+    background: rgba(227, 79, 38, 0.1);
+    border-color: rgba(227, 79, 38, 0.2);
+  }
+  .skill-html:hover .skill-icon-wrapper {
+    background: rgba(227, 79, 38, 0.2);
+    border-color: rgba(227, 79, 38, 0.4);
+    box-shadow: 0 0 20px rgba(227, 79, 38, 0.3);
+  }
+
+  .skill-css .skill-icon-wrapper {
+    background: rgba(21, 114, 182, 0.1);
+    border-color: rgba(21, 114, 182, 0.2);
+  }
+  .skill-css:hover .skill-icon-wrapper {
+    background: rgba(21, 114, 182, 0.2);
+    border-color: rgba(21, 114, 182, 0.4);
+    box-shadow: 0 0 20px rgba(21, 114, 182, 0.3);
+  }
+
+  .skill-sql .skill-icon-wrapper {
+    background: rgba(51, 103, 145, 0.1);
+    border-color: rgba(51, 103, 145, 0.2);
+  }
+  .skill-sql:hover .skill-icon-wrapper {
+    background: rgba(51, 103, 145, 0.2);
+    border-color: rgba(51, 103, 145, 0.4);
+    box-shadow: 0 0 20px rgba(51, 103, 145, 0.3);
+  }
+
+  .skill-ux .skill-icon-wrapper {
+    background: rgba(255, 107, 107, 0.1);
+    border-color: rgba(255, 107, 107, 0.2);
+  }
+  .skill-ux:hover .skill-icon-wrapper {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.4);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+  }
+
+  .skill-linux .skill-icon-wrapper {
+    background: rgba(252, 198, 36, 0.1);
+    border-color: rgba(252, 198, 36, 0.2);
+  }
+  .skill-linux:hover .skill-icon-wrapper {
+    background: rgba(252, 198, 36, 0.2);
+    border-color: rgba(252, 198, 36, 0.4);
+    box-shadow: 0 0 20px rgba(252, 198, 36, 0.3);
   }
 
   /* Project Cards */
@@ -482,58 +784,6 @@ html {
     background: rgba(147, 112, 219, 0.1);
     color: rgba(147, 112, 219, 0.9);
     text-shadow: 0 0 8px rgba(147, 112, 219, 0.4);
-  }
-
-  /* Skill-specific icon colors */
-  .skill-php {
-    color: #777bb4;
-  }
-  .skill-java {
-    color: #ed8b00;
-  }
-  .skill-cpp {
-    color: #00599c;
-  }
-  .skill-html {
-    color: #e34f26;
-  }
-  .skill-css {
-    color: #1572b6;
-  }
-  .skill-sql {
-    color: #336791;
-  }
-  .skill-ux {
-    color: #ff6b6b;
-  }
-  .skill-linux {
-    color: #fcc624;
-  }
-
-  /* Enhanced hover glow effects for icons */
-  .skill-card:hover .skill-php {
-    text-shadow: 0 0 16px rgba(119, 123, 180, 0.8);
-  }
-  .skill-card:hover .skill-java {
-    text-shadow: 0 0 16px rgba(237, 139, 0, 0.8);
-  }
-  .skill-card:hover .skill-cpp {
-    text-shadow: 0 0 16px rgba(0, 89, 156, 0.8);
-  }
-  .skill-card:hover .skill-html {
-    text-shadow: 0 0 16px rgba(227, 79, 38, 0.8);
-  }
-  .skill-card:hover .skill-css {
-    text-shadow: 0 0 16px rgba(21, 114, 182, 0.8);
-  }
-  .skill-card:hover .skill-sql {
-    text-shadow: 0 0 16px rgba(51, 103, 145, 0.8);
-  }
-  .skill-card:hover .skill-ux {
-    text-shadow: 0 0 16px rgba(255, 107, 107, 0.8);
-  }
-  .skill-card:hover .skill-linux {
-    text-shadow: 0 0 16px rgba(252, 198, 36, 0.8);
   }
 }
 
@@ -651,8 +901,8 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 20px;
+  height: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -667,7 +917,7 @@ html {
 }
 
 .hamburger-icon.open .hamburger-line:nth-child(1) {
-  transform: rotate(45deg) translate(7px, 7px);
+  transform: rotate(45deg) translate(5px, 5px);
 }
 
 .hamburger-icon.open .hamburger-line:nth-child(2) {
@@ -676,28 +926,7 @@ html {
 }
 
 .hamburger-icon.open .hamburger-line:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* Enhanced Navigation Bar */
-.nav-bar {
-  background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.8) 100%);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(147, 112, 219, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-}
-
-.nav-bar::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(147, 112, 219, 0.4) 50%, transparent 100%);
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Custom scrollbar */
@@ -947,11 +1176,378 @@ html {
 
 /* Scroll offset compensation for sticky header */
 section[id] {
-  scroll-margin-top: 80px; /* Adjust based on header height */
+  scroll-margin-top: 100px; /* Adjust based on floating nav height */
 }
 
 @media (max-width: 768px) {
   section[id] {
-    scroll-margin-top: 70px; /* Slightly less for mobile */
+    scroll-margin-top: 80px; /* Slightly less for mobile */
+  }
+}
+
+/* Enhanced Terminal Console Styling */
+.terminal-console {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  border: 2px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 40px rgba(0, 255, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.terminal-console::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 0, 0.3) 50%, transparent 100%);
+}
+
+.terminal-header {
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-bottom: 1px solid #333;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.terminal-control.close {
+  background: #ff5f56;
+  box-shadow: 0 0 8px rgba(255, 95, 86, 0.3);
+}
+
+.terminal-control.minimize {
+  background: #ffbd2e;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.3);
+}
+
+.terminal-control.maximize {
+  background: #27ca3f;
+  box-shadow: 0 0 8px rgba(39, 202, 63, 0.3);
+}
+
+.terminal-control:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.terminal-title {
+  color: #888;
+  font-size: 13px;
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-left: 8px;
+}
+
+.terminal-body {
+  padding: 20px;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Monaco", "Consolas", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #00ff00;
+  background: radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%);
+  min-height: 400px;
+}
+
+.terminal-line {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: terminalLineAppear 0.5s ease-out forwards;
+}
+
+.terminal-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes terminalLineAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.terminal-prompt {
+  color: #00ff00;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  font-weight: 600;
+}
+
+.terminal-command {
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  margin-left: 8px;
+}
+
+.terminal-output {
+  color: #cccccc;
+  text-shadow: 0 0 4px rgba(204, 204, 204, 0.2);
+}
+
+.terminal-success {
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+  font-weight: 600;
+}
+
+.terminal-error {
+  color: #ff4444;
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+}
+
+.terminal-warning {
+  color: #ffaa00;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+}
+
+.terminal-info {
+  color: #00aaff;
+  text-shadow: 0 0 8px rgba(0, 170, 255, 0.5);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #00ff00;
+  margin-left: 4px;
+  animation: terminalBlink 1.2s infinite;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+}
+
+@keyframes terminalBlink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: inherit;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  caret-color: #00ff00;
+  flex: 1;
+  margin-left: 8px;
+}
+
+.terminal-input::placeholder {
+  color: #666;
+  text-shadow: none;
+}
+
+.package-list {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.package-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  color: #cccccc;
+  text-shadow: 0 0 4px rgba(204, 204, 204, 0.2);
+}
+
+.package-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+.skill-progress-terminal {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar-terminal {
+  flex: 1;
+  height: 4px;
+  background: rgba(0, 255, 0, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill-terminal {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00, #00aa00);
+  border-radius: 2px;
+  width: 0;
+  transition: width 2s ease-out;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  position: relative;
+}
+
+.progress-fill-terminal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+  animation: progressShimmer 2s infinite;
+}
+
+@keyframes progressShimmer {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+.progress-percentage-terminal {
+  color: #00ff00;
+  font-size: 12px;
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.5);
+  min-width: 40px;
+  text-align: right;
+}
+
+.terminal-section-divider {
+  margin: 16px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 0, 0.3) 50%, transparent 100%);
+}
+
+.linux-detail-terminal {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.linux-command {
+  color: #00ff00;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  margin-bottom: 12px;
+}
+
+.linux-output {
+  color: #cccccc;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  text-shadow: 0 0 4px rgba(204, 204, 204, 0.2);
+  margin-bottom: 16px;
+}
+
+.linux-description {
+  color: #ffffff;
+  font-size: 14px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  margin-bottom: 16px;
+}
+
+.linux-penguin {
+  font-size: 32px;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+  animation: penguinGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes penguinGlow {
+  from {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+  }
+  to {
+    filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.4));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .terminal-body {
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .terminal-header {
+    padding: 10px 14px;
+  }
+
+  .terminal-title {
+    font-size: 12px;
+  }
+
+  .package-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .linux-penguin {
+    font-size: 28px;
+  }
+}
+
+/* Enhanced typing animation */
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #00ff00;
+  animation: typing 3s steps(40, end), blink-caret 1.2s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #00ff00;
   }
 }

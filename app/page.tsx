@@ -15,11 +15,11 @@ interface Translation {
 
 const translations: Translation = {
   // Navigation
-  navAbout: { en: "// About", es: "// Acerca" },
-  navSkills: { en: "// Skills", es: "// Habilidades" },
-  navServices: { en: "// Services", es: "// Servicios" },
-  navProjects: { en: "// Projects", es: "// Proyectos" },
-  navContact: { en: "// Contacto", es: "// Contacto" },
+  navAbout: { en: "About", es: "Acerca" },
+  navSkills: { en: "Skills", es: "Habilidades" },
+  navServices: { en: "Services", es: "Servicios" },
+  navProjects: { en: "Projects", es: "Proyectos" },
+  navContact: { en: "Contacto", es: "Contacto" },
 
   // Hero Section
   heroTitle: { en: "Mauricio Medina", es: "Mauricio Medina" },
@@ -108,7 +108,6 @@ const translations: Translation = {
 
   // Footer
   footerCopyright: {
-    //! MOdificar
     en: "© 2024 Mauricio Medina • Built with passion for clean code",
     es: "© 2024 Mauricio Medina • Construido con pasión por el código limpio",
   },
@@ -159,6 +158,27 @@ const projectsData = [
     featured: false,
   },
 ]
+
+// Arch Linux SVG Logo Component
+const ArchLogo = () => (
+  <svg width="24" height="24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M32 2C32 2 20 20 20 32C20 44 32 62 32 62C32 62 44 44 44 32C44 20 32 2 32 2Z"
+      fill="currentColor"
+      opacity="0.8"
+    />
+    <path
+      d="M32 8C32 8 24 22 24 32C24 42 32 56 32 56C32 56 40 42 40 32C40 22 32 8 32 8Z"
+      fill="currentColor"
+      opacity="0.6"
+    />
+    <path
+      d="M32 14C32 14 28 24 28 32C28 40 32 50 32 50C32 50 36 40 36 32C36 24 32 14 32 14Z"
+      fill="currentColor"
+      opacity="0.4"
+    />
+  </svg>
+)
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("about")
@@ -576,13 +596,10 @@ echo "Backup completed: $BACKUP_DIR"`,
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      // Get the header height for offset calculation
-      const header = document.querySelector("nav")
-      const headerHeight = header ? header.offsetHeight : 70
-
-      // Calculate the target position accounting for sticky header
+      // Get the floating nav height for offset calculation
+      const navHeight = 80 // Approximate floating nav height
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-      const offsetPosition = elementPosition - headerHeight - 20 // Extra 20px padding
+      const offsetPosition = elementPosition - navHeight - 20 // Extra 20px padding
 
       window.scrollTo({
         top: offsetPosition,
@@ -598,96 +615,86 @@ echo "Backup completed: $BACKUP_DIR"`,
   return (
     <div className="min-h-screen bg-[#111111] text-[#EAEAEA] font-mono main-content">
       <DigitalEtherBackground />
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 nav-bar">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
-          <div className="flex justify-between items-center">
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-10 desktop-nav-panel">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-sm transition-all duration-300 hover:text-[#9370DB] hover:glow-purple relative ${
-                    activeSection === item.id ? "text-[#9370DB] glow-purple" : "text-[#EAEAEA]"
-                  }`}
-                >
-                  {activeSection === item.id && (
-                    <span className="absolute -left-3 top-1/2 transform -translate-y-1/2 text-[#9370DB] text-xs">
-                      •
-                    </span>
-                  )}
-                  {item.label}
-                </button>
-              ))}
-            </div>
 
-            {/* Desktop Language Switcher */}
-            <div className="hidden md:flex items-center space-x-1 text-sm desktop-nav-panel">
+      {/* Modern Floating Navigation */}
+      <nav className="floating-nav">
+        <div className="nav-content">
+          {/* Desktop Navigation Links */}
+          <div className="nav-links hidden md:flex">
+            {navItems.map((item) => (
               <button
-                onClick={() => switchLanguage("es")}
-                className={`transition-all duration-300 ${
-                  language === "es"
-                    ? "text-[#EAEAEA] cursor-default"
-                    : "text-secondary hover:text-[#EAEAEA] cursor-pointer"
-                }`}
-                disabled={language === "es"}
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`nav-link ${activeSection === item.id ? "active" : ""}`}
               >
-                ES
+                {item.label}
               </button>
-              <span className="text-secondary">/</span>
-              <button
-                onClick={() => switchLanguage("en")}
-                className={`transition-all duration-300 ${
-                  language === "en"
-                    ? "text-[#EAEAEA] cursor-default"
-                    : "text-secondary hover:text-[#EAEAEA] cursor-pointer"
-                }`}
-                disabled={language === "en"}
-              >
-                EN
-              </button>
-            </div>
+            ))}
+          </div>
 
-            {/* Mobile Menu */}
-            <div className="mobile-only">
-              <MobileMenu
-                navItems={navItems}
-                activeSection={activeSection}
-                language={language}
-                onSectionClick={scrollToSection}
-                onLanguageSwitch={switchLanguage}
-              />
-            </div>
+          {/* Mobile Navigation Toggle */}
+          <div className="mobile-nav-toggle md:hidden">
+            <MobileMenu
+              navItems={navItems}
+              activeSection={activeSection}
+              language={language}
+              onSectionClick={scrollToSection}
+              onLanguageSwitch={switchLanguage}
+            />
+          </div>
+
+          {/* Language Switcher */}
+          <div className="language-switcher hidden md:flex">
+            <button
+              onClick={() => switchLanguage("es")}
+              className={`language-btn ${language === "es" ? "active" : ""}`}
+            >
+              ES
+            </button>
+            <span className="text-secondary mx-1">/</span>
+            <button
+              onClick={() => switchLanguage("en")}
+              className={`language-btn ${language === "en" ? "active" : ""}`}
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Arch Linux Logo */}
+          <div className="arch-logo">
+            <ArchLogo />
+            <span className="text-xs font-mono text-[#9370DB] hidden sm:inline">arch</span>
           </div>
         </div>
       </nav>
 
       {/* About Section */}
-      <section id="about" className="py-12 md:py-20 section-primary">
+      <section id="about" className="py-20 md:py-32 section-primary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-min">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-min">
             {/* Hero Module */}
             <div className="lg:col-span-2 bg-transparent p-6 md:p-8 fade-slide-up stagger-1">
-              <h1 className="text-3xl font-medium text-[#EAEAEA] mb-3 leading-tight font-mono">{t("heroTitle")}</h1>
-              <h2 className="text-xl text-secondary mb-6 leading-relaxed font-mono">{t("heroSubtitle")}</h2>
-              <p className="text-base text-secondary leading-[1.7] font-sans">
+              <h1 className="text-4xl md:text-5xl font-medium text-[#EAEAEA] mb-4 leading-tight font-mono">
+                {t("heroTitle")}
+              </h1>
+              <h2 className="text-xl md:text-2xl text-secondary mb-8 leading-relaxed font-mono">{t("heroSubtitle")}</h2>
+              <p className="text-base md:text-lg text-secondary leading-[1.7] font-sans max-w-2xl">
                 <span className="text-[#9370DB]">// </span>
                 {t("heroDescription")}
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="flex flex-col sm:flex-row gap-4 mt-10">
                 <button
                   onClick={handleDownloadCV}
                   disabled={isDownloading}
-                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] flex items-center justify-center hover-glow-clickable"
+                  className="flex-1 sm:flex-none px-8 py-4 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded-lg hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[200px] flex items-center justify-center hover-glow-clickable"
                 >
                   {downloadText}
                 </button>
                 <button
                   onClick={() => setShowContactModal(true)}
-                  className="flex-1 sm:flex-none px-6 py-3 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[180px] hover-glow-clickable"
+                  className="flex-1 sm:flex-none px-8 py-4 border border-[#9370DB]/40 text-[#EAEAEA] font-mono text-sm rounded-lg hover:border-[#9370DB] hover:bg-[#9370DB]/10 hover:glow-purple transition-all duration-300 min-w-[200px] hover-glow-clickable"
                 >
                   Contact Me
                 </button>
@@ -696,12 +703,8 @@ echo "Backup completed: $BACKUP_DIR"`,
 
             {/* Profile Picture Module */}
             <div className="flex justify-center items-start p-8 fade-slide-up stagger-2">
-              <div className="w-56 h-56 rounded-full overflow-hidden hover:ring-2 hover:ring-[#9370DB] hover:shadow-lg hover:shadow-[#9370DB]/50 transition-all duration-500">
-                <img
-                  src="fotoperfilmauriciomedina.jpeg"
-                  alt="Mauricio Medina"
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden hover:ring-2 hover:ring-[#9370DB] hover:shadow-lg hover:shadow-[#9370DB]/50 transition-all duration-500">
+                <img src="fotoperfilmauriciomedina.jpeg" alt="Mauricio Medina" className="w-full h-full object-cover" />
               </div>
             </div>
 
@@ -719,98 +722,143 @@ echo "Backup completed: $BACKUP_DIR"`,
         </div>
       </section>
 
-      {/* Skills Matrix Section */}
-      <section id="skills-matrix" className="py-12 md:py-20 section-secondary">
+      {/* Enhanced Technical Skills Section */}
+      <section id="skills-matrix" className="py-20 md:py-32 section-secondary">
         <div className="max-w-7xl mx-auto px-4 md:px-6 content-depth">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] mb-8 md:mb-12 text-center leading-tight font-mono">
-            <span className="text-[#9370DB]">// </span>Technical Skills
-          </h2>
+          <div className="text-center mb-16 fade-slide-up">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#EAEAEA] mb-4 leading-tight font-mono">
+              <span className="text-[#9370DB]">// </span>Technical Skills
+            </h2>
+            <p className="text-lg text-secondary font-sans max-w-2xl mx-auto">
+              A comprehensive overview of my technical expertise and proficiency levels
+            </p>
+          </div>
 
-          <div className="skills-matrix">
-            {[
-              {
-                name: "PHP",
-                level: "Expert",
-                progress: 75,
-                icon: "🐘",
-                className: "skill-php",
-                description: "Server-side development & frameworks",
-              },
-              {
-                name: "Java",
-                level: "Advanced",
-                progress: 55,
-                icon: "☕",
-                className: "skill-java",
-                description: "Enterprise applications & Spring",
-              },
-              {
-                name: "C++",
-                level: "Proficient",
-                progress: 75,
-                icon: "⚡",
-                className: "skill-cpp",
-                description: "System programming & algorithms",
-              },
-              {
-                name: "HTML5",
-                level: "Expert",
-                progress: 95,
-                icon: "🌐",
-                className: "skill-html",
-                description: "Semantic markup & accessibility",
-              },
-              {
-                name: "CSS3",
-                level: "Expert",
-                progress: 90,
-                icon: "🎨",
-                className: "skill-css",
-                description: "Modern styling & animations",
-              },
-              {
-                name: "SQL",
-                level: "Advanced",
-                progress: 88,
-                icon: "🗄️",
-                className: "skill-sql",
-                description: "Database design & optimization",
-              },
-              {
-                name: "UX/UI Design",
-                level: "Advanced",
-                progress: 82,
-                icon: "✨",
-                className: "skill-ux",
-                description: "User experience & interface design",
-              },
-              {
-                name: "Linux Admin",
-                level: "Expert",
-                progress: 92,
-                icon: "🐧",
-                className: "skill-linux",
-                description: "System administration & scripting",
-              },
-            ].map((skill, index) => (
-              <div
-                key={skill.name}
-                className={`skill-card fade-slide-up stagger-${index + 1} hover-scale-subtle`}
-                style={{ "--progress-width": `${skill.progress}%` } as React.CSSProperties}
-              >
-                <div className="skill-header">
-                  <div className={`skill-icon ${skill.className}`}>{skill.icon}</div>
-                  <div>
-                    <div className="skill-name font-mono">{skill.name}</div>
-                    <div className="skill-level font-sans">{skill.level}</div>
+          <div className="skills-showcase fade-slide-up stagger-1">
+            <div className="skills-grid">
+              {[
+                {
+                  name: "PHP",
+                  level: "Expert",
+                  progress: 95,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#777bb4">
+                      <path d="M7.01 10.207h-.944l-.515 2.648h.838c.556 0 .982-.122 1.292-.391.313-.27.47-.663.47-1.178 0-.353-.093-.621-.276-.804-.183-.183-.463-.275-.865-.275zm12.583-4.157c.473 0 .825.108 1.056.324.23.216.345.531.345.945 0 .47-.158.858-.473 1.167-.315.308-.744.462-1.287.462h-.29l.342-1.76h-.463l-.515 2.648h.838c.556 0 .982-.122 1.292-.391.313-.27.47-.663.47-1.178 0-.353-.093-.621-.276-.804-.183-.183-.463-.275-.865-.275h-.944l-.515 2.648h.838c.556 0 .982-.122 1.292-.391.313-.27.47-.663.47-1.178 0-.353-.093-.621-.276-.804-.183-.183-.463-.275-.865-.275h-.944l-.515 2.648h.838c.556 0 .982-.122 1.292-.391.313-.27.47-.663.47-1.178 0-.353-.093-.621-.276-.804-.183-.183-.463-.275-.865-.275z" />
+                    </svg>
+                  ),
+                  className: "skill-php",
+                  description: "Server-side development, Laravel, Symfony",
+                },
+                {
+                  name: "Java",
+                  level: "Advanced",
+                  progress: 85,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#ed8b00">
+                      <path d="M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.761.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218" />
+                    </svg>
+                  ),
+                  className: "skill-java",
+                  description: "Enterprise applications, Spring Boot",
+                },
+                {
+                  name: "C++",
+                  level: "Proficient",
+                  progress: 75,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#00599c">
+                      <path d="M22.394 6c-.167-.29-.398-.543-.652-.69L12.926.22c-.509-.294-1.34-.294-1.848 0L2.26 5.31c-.508.293-.923 1.013-.923 1.6v10.18c0 .294.104.62.271.91.167.29.398.543.652.69l8.816 5.09c.508.293 1.34.293 1.848 0l8.816-5.09c.254-.147.485-.4.652-.69.167-.29.27-.616.27-.91V6.91c.003-.294-.1-.62-.268-.91zM12 19.11c-3.92 0-7.109-3.19-7.109-7.11 0-3.92 3.19-7.11 7.109-7.11a7.133 7.133 0 016.156 3.553l-3.076 1.78a3.567 3.567 0 00-3.08-1.78A3.56 3.56 0 008.444 12 3.56 3.56 0 0012 15.555a3.57 3.57 0 003.08-1.778l3.078 1.78A7.135 7.135 0 0112 19.11zm7.11-6.715h-.79V11.61h-.79v.785h-.79v.79h.79v.785h.79v-.785h.79v-.79zm2.962 0h-.79V11.61h-.79v.785h-.79v.79h.79v.785h.79v-.785h.79v-.79z" />
+                    </svg>
+                  ),
+                  className: "skill-cpp",
+                  description: "System programming, algorithms",
+                },
+                {
+                  name: "HTML5",
+                  level: "Expert",
+                  progress: 95,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#e34f26">
+                      <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z" />
+                    </svg>
+                  ),
+                  className: "skill-html",
+                  description: "Semantic markup, accessibility",
+                },
+                {
+                  name: "CSS3",
+                  level: "Expert",
+                  progress: 90,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#1572b6">
+                      <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z" />
+                    </svg>
+                  ),
+                  className: "skill-css",
+                  description: "Modern styling, animations, Tailwind",
+                },
+                {
+                  name: "SQL",
+                  level: "Advanced",
+                  progress: 88,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#336791">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 16.568C16.327 17.81 14.39 18.5 12 18.5s-4.327-.69-5.568-1.932C5.19 15.327 4.5 13.39 4.5 11s.69-4.327 1.932-5.568C7.673 4.19 9.61 3.5 12 3.5s4.327.69 5.568 1.932C18.81 6.673 19.5 8.61 19.5 11s-.69 4.327-1.932 5.568z" />
+                    </svg>
+                  ),
+                  className: "skill-sql",
+                  description: "Database design, optimization, PostgreSQL",
+                },
+                {
+                  name: "UX/UI Design",
+                  level: "Advanced",
+                  progress: 82,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#ff6b6b">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                  ),
+                  className: "skill-ux",
+                  description: "User experience, interface design, Figma",
+                },
+                {
+                  name: "Linux Admin",
+                  level: "Expert",
+                  progress: 92,
+                  icon: (
+                    <svg viewBox="0 0 24 24" className="skill-icon" fill="#fcc624">
+                      <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 01-.088.069c-.104.105-.259.158-.436.158-.177 0-.33-.053-.435-.158a.698.698 0 01-.096-.069.956.956 0 01-.213-.335 1.69 1.69 0 01-.148-.706l-.004.024a.086.086 0 01-.004.021v-.105c0 .02.006.04.006.06.008-.265.061-.465.166-.724.107-.201.248-.398.438-.533.188-.136.37-.198.584-.198z" />
+                    </svg>
+                  ),
+                  className: "skill-linux",
+                  description: "System administration, Docker, scripting",
+                },
+              ].map((skill, index) => (
+                <div
+                  key={skill.name}
+                  className={`skill-item ${skill.className} fade-slide-up stagger-${index + 2}`}
+                  style={{ "--progress-width": `${skill.progress}%` } as React.CSSProperties}
+                >
+                  <div className="skill-header">
+                    <div className="skill-icon-wrapper">{skill.icon}</div>
+                    <div className="skill-info">
+                      <div className="skill-name">{skill.name}</div>
+                      <div className="skill-level">{skill.level}</div>
+                    </div>
+                  </div>
+                  <div className="text-sm text-secondary mb-4 leading-relaxed font-sans">{skill.description}</div>
+                  <div className="skill-progress">
+                    <div className="progress-label">
+                      <span className="progress-text">Proficiency</span>
+                      <span className="progress-percentage">{skill.progress}%</span>
+                    </div>
+                    <div className="progress-container">
+                      <div className="progress-bar"></div>
+                    </div>
                   </div>
                 </div>
-                <div className="text-xs text-secondary mb-3 leading-relaxed font-sans">{skill.description}</div>
-                <div className="progress-container">
-                  <div className="progress-bar"></div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -828,64 +876,174 @@ echo "Backup completed: $BACKUP_DIR"`,
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
-            {/* Terminal Skills Module */}
-            <div className="lg:col-span-2 bg-black/40 p-4 md:p-6 rounded-lg hover-glow-interactive transition-all duration-500 border border-[#333] fade-slide-up stagger-1">
-              <div className="font-mono text-sm">
-                <div className="flex items-center mb-4">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <span className="ml-4 text-secondary">terminal</span>
+            {/* Enhanced Terminal Skills Module */}
+            <div className="lg:col-span-2 terminal-console fade-slide-up stagger-1">
+              <div className="terminal-header">
+                <div className="terminal-controls">
+                  <div className="terminal-control close"></div>
+                  <div className="terminal-control minimize"></div>
+                  <div className="terminal-control maximize"></div>
                 </div>
+                <div className="terminal-title">Terminal — mauricio@arch-linux</div>
+              </div>
 
-                <div className="space-y-3">
-                  {/* Previous commands and outputs */}
-                  <div className="text-[#EAEAEA]">
-                    [user@arch ~]$ sudo pacman -S {language === "en" ? "skills" : "habilidades"}
+              <div className="terminal-body">
+                <div className="space-y-2">
+                  {/* Command execution */}
+                  <div className="terminal-line visible">
+                    <span className="terminal-prompt">[user@arch ~]$</span>
+                    <span className="terminal-command">
+                      sudo pacman -S {language === "en" ? "skills" : "habilidades"}
+                    </span>
                   </div>
-                  <div className="text-secondary text-xs mb-2">
-                    {language === "en" ? "resolving dependencies..." : "resolviendo dependencias..."}
+
+                  <div className="terminal-line visible" style={{ animationDelay: "0.5s" }}>
+                    <span className="terminal-output">
+                      {language === "en" ? "resolving dependencies..." : "resolviendo dependencias..."}
+                    </span>
                   </div>
-                  <div className="space-y-1 mb-3 text-[#EAEAEA] text-xs leading-relaxed">
-                    <div>
-                      {language === "en"
-                        ? "Packages (5): php java c++ html css"
-                        : "Paquetes (5): php java c++ html css"}
+
+                  <div className="terminal-section-divider"></div>
+
+                  {/* Package listings with icons */}
+                  <div className="terminal-line visible" style={{ animationDelay: "1s" }}>
+                    <span className="terminal-info">{language === "en" ? "Packages (5):" : "Paquetes (5):"}</span>
+                  </div>
+
+                  <div className="package-list">
+                    {[
+                      { name: "php", icon: "🐘", progress: 95 },
+                      { name: "java", icon: "☕", progress: 85 },
+                      { name: "c++", icon: "⚡", progress: 75 },
+                      { name: "html", icon: "🌐", progress: 95 },
+                      { name: "css", icon: "🎨", progress: 90 },
+                    ].map((pkg, index) => (
+                      <div
+                        key={pkg.name}
+                        className="terminal-line visible"
+                        style={{ animationDelay: `${1.2 + index * 0.2}s` }}
+                      >
+                        <div className="package-item">
+                          <span className="package-icon">{pkg.icon}</span>
+                          <span className="terminal-output">{pkg.name}</span>
+                          <div className="skill-progress-terminal ml-4">
+                            <div className="progress-bar-terminal">
+                              <div
+                                className="progress-fill-terminal"
+                                style={{
+                                  width: visibleSections.has("skills") ? `${pkg.progress}%` : "0%",
+                                  transitionDelay: `${2 + index * 0.3}s`,
+                                }}
+                              ></div>
+                            </div>
+                            <span className="progress-percentage-terminal">{pkg.progress}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "2.5s" }}>
+                    <span className="terminal-info">{language === "en" ? "Database (1):" : "Base de datos (1):"}</span>
+                  </div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "2.7s" }}>
+                    <div className="package-item ml-4">
+                      <span className="package-icon">🗄️</span>
+                      <span className="terminal-output">sql</span>
+                      <div className="skill-progress-terminal ml-4">
+                        <div className="progress-bar-terminal">
+                          <div
+                            className="progress-fill-terminal"
+                            style={{
+                              width: visibleSections.has("skills") ? "88%" : "0%",
+                              transitionDelay: "3s",
+                            }}
+                          ></div>
+                        </div>
+                        <span className="progress-percentage-terminal">88%</span>
+                      </div>
                     </div>
-                    <div>{language === "en" ? "Database (1): sql" : "Base de datos (1): sql"}</div>
-                    <div>
-                      {language === "en"
-                        ? "Expertise (2): ux/ui-design linux-system-administration"
-                        : "Experiencia (2): diseño-ux/ui administración-sistema-linux"}
+                  </div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "3s" }}>
+                    <span className="terminal-info">{language === "en" ? "Expertise (2):" : "Experiencia (2):"}</span>
+                  </div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "3.2s" }}>
+                    <div className="package-item ml-4">
+                      <span className="package-icon">✨</span>
+                      <span className="terminal-output">{language === "en" ? "ux/ui-design" : "diseño-ux/ui"}</span>
+                      <div className="skill-progress-terminal ml-4">
+                        <div className="progress-bar-terminal">
+                          <div
+                            className="progress-fill-terminal"
+                            style={{
+                              width: visibleSections.has("skills") ? "82%" : "0%",
+                              transitionDelay: "3.5s",
+                            }}
+                          ></div>
+                        </div>
+                        <span className="progress-percentage-terminal">82%</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-secondary text-xs mb-3">
-                    {language === "en" ? "Total Installed Size: 1024.00 MiB" : "Tamaño Total Instalado: 1024.00 MiB"}
+
+                  <div className="terminal-line visible" style={{ animationDelay: "3.4s" }}>
+                    <div className="package-item ml-4">
+                      <span className="package-icon">🐧</span>
+                      <span className="terminal-output">
+                        {language === "en" ? "linux-system-administration" : "administración-sistema-linux"}
+                      </span>
+                      <div className="skill-progress-terminal ml-4">
+                        <div className="progress-bar-terminal">
+                          <div
+                            className="progress-fill-terminal"
+                            style={{
+                              width: visibleSections.has("skills") ? "92%" : "0%",
+                              transitionDelay: "3.8s",
+                            }}
+                          ></div>
+                        </div>
+                        <span className="progress-percentage-terminal">92%</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-green-400 text-xs mb-6">{t("skillsInstalled")}</div>
+
+                  <div className="terminal-section-divider"></div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "4s" }}>
+                    <span className="terminal-output">
+                      {language === "en" ? "Total Installed Size: 1024.00 MiB" : "Tamaño Total Instalado: 1024.00 MiB"}
+                    </span>
+                  </div>
+
+                  <div className="terminal-line visible" style={{ animationDelay: "4.2s" }}>
+                    <span className="terminal-success">✓ {t("skillsInstalled")}</span>
+                  </div>
+
+                  <div className="terminal-section-divider"></div>
 
                   {/* Interactive terminal input */}
-                  <div className="flex items-center">
-                    <span className="text-[#EAEAEA]">[user@arch ~]$ </span>
+                  <div className="terminal-line visible" style={{ animationDelay: "4.5s" }}>
+                    <span className="terminal-prompt">[user@arch ~]$</span>
                     <input
                       type="text"
-                      className="bg-transparent border-none outline-none text-green-400 flex-1 ml-2 placeholder-secondary font-sans"
+                      className="terminal-input"
                       placeholder={t("skillsPlaceholder")}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           const command = e.currentTarget.value.trim()
                           if (command) {
                             // Add the command to terminal history
-                            const terminalDiv = e.currentTarget.closest(".space-y-3")
+                            const terminalDiv = e.currentTarget.closest(".terminal-body")
                             const newCommand = document.createElement("div")
-                            newCommand.className = "text-[#EAEAEA] mt-3"
-                            newCommand.textContent = `[user@arch ~]$ ${command}`
+                            newCommand.className = "terminal-line visible"
+                            newCommand.innerHTML = `<span class="terminal-prompt">[user@arch ~]$</span><span class="terminal-command">${command}</span>`
 
                             const errorMessage = document.createElement("div")
-                            errorMessage.className = "text-red-400 text-xs mb-3 leading-relaxed font-sans"
-                            errorMessage.innerHTML = `bash: ${command}: command not found<br/><span class="text-[#9370DB]">Error:</span> <span class="text-secondary">${t("skillsError")}</span><br/><span class="text-secondary">Email:</span> <a href="mailto:mauricio@example.com" class="text-[#9370DB] hover:glow-purple transition-all hover-glow-clickable">mauricio@example.com</a>`
+                            errorMessage.className = "terminal-line visible"
+                            errorMessage.innerHTML = `<span class="terminal-error">bash: ${command}: command not found</span><br/><span class="terminal-info">Error:</span> <span class="terminal-output">${t("skillsError")}</span><br/><span class="terminal-output">Email:</span> <a href="mailto:mauricio@example.com" class="terminal-success hover:text-green-300 transition-all hover-glow-clickable">mauricio@example.com</a>`
 
                             terminalDiv?.appendChild(newCommand)
                             terminalDiv?.appendChild(errorMessage)
@@ -897,24 +1055,29 @@ echo "Backup completed: $BACKUP_DIR"`,
                         }
                       }}
                     />
-                    <span className={`terminal-cursor text-green-400`}>_</span>
+                    <span className="terminal-cursor"></span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Linux Detail Module */}
-            <div className="bg-black/20 p-6 rounded-lg transition-all duration-300 text-center border border-[#333] fade-slide-up stagger-2">
-              <div className="text-sm text-[#9370DB] mb-3 font-mono">uname -a</div>
-              <div className="text-xs text-secondary mb-4 leading-relaxed font-sans">Linux arch 6.6.1-zen</div>
-              <div className="text-sm text-[#EAEAEA] mb-3 font-sans">Powered by Linux</div>
-              <div className="text-3xl">🐧</div>
+            {/* Enhanced Linux Detail Module */}
+            <div className="linux-detail-terminal fade-slide-up stagger-2">
+              <div className="linux-command">$ uname -a</div>
+              <div className="linux-output">Linux arch 6.6.1-zen1-1-zen #1 SMP PREEMPT_DYNAMIC</div>
+              <div className="linux-description">Powered by Arch Linux</div>
+              <div className="linux-penguin">🐧</div>
+              <div className="terminal-section-divider"></div>
+              <div className="linux-command">$ whoami</div>
+              <div className="linux-output">mauricio</div>
+              <div className="linux-command">$ uptime</div>
+              <div className="linux-output">up 365 days, 24:00, 1 user</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section Separator - CLI Loading Indicator */}
+      {/* Section Separator */}
       <div className="flex justify-center py-12">
         <div className="section-separator"></div>
       </div>
@@ -1137,7 +1300,7 @@ echo "Backup completed: $BACKUP_DIR"`,
                   <span className="text-[#9370DB]">{">"}</span> LinkedIn
                 </a>
                 <a
-                  href="https://github.com/NegroHmd"
+                  href="https://github.com/NegroHm"
                   className="block text-[#EAEAEA] hover:text-[#9370DB]  transition-all duration-300 "
                 >
                   <span className="text-[#9370DB]">{">"}</span> GitHub
